@@ -12,8 +12,13 @@ const Form = () => {
     const [age, setAge] = useState("");
     const [email, setEmail] = useState("");
     const [organization, setOrganization] = useState("");
-    const [activites, setActivites] = useState("");
+    const [activities, setActivities] = useState("");
+    const [title, setTitle] = useState("");
+    const [number, setNumber] = useState("");
     const [other, setOther] = useState("");
+
+    
+
     const countries = [
         {
             value: 'Argentina',
@@ -104,8 +109,9 @@ const Form = () => {
         }
       ];
     
-    const [country, setCountry] = React.useState('Argentina');
+    const [country, setCountry] = useState('Argentina');
     const handleCountry = (event) => {
+        console.log(event.target.value);
         setCountry(event.target.value);
     };
 
@@ -116,16 +122,31 @@ const Form = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        db.collection("g20-2022-apps").add({
+        console.log({
             fullname:fullname,
             country:country,
             gender:gender,
             age:age,
             email:email,
             organization:organization,
-            activites:activites,
+            activities:activities,
+            title:title,
+            number:number,
             other:other
+        });
+        db.collection("formResponses").add({
+            fullname:fullname,
+            country:country,
+            gender:gender,
+            age:age,
+            email:email,
+            organization:organization,
+            activities:activities,
+            title:title,
+            phoneNumber:number,
+            other:other,
+            photoUrl: '',
+            videoUrl: ''
         }).then(() => {
             alert("success");
         })
@@ -138,9 +159,11 @@ const Form = () => {
         setGender("");
         setAge("");
         setEmail("");
+        setNumber("");
         setOrganization("");
-        setActivites("");
+        setActivities("");
         setOther("");
+        setTitle("");
     };
 
     return (
@@ -164,7 +187,7 @@ const Form = () => {
                     <div className={classes.formFlex}>
                         <div style={{margin:"0px 0% 20px 0%", width:"45%"}}>
                             <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Full Name</h5>
-                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Pandu Dirga" type="text" variant="standard" onChange="" autoComplete='off'/>
+                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Pandu Dirga" type="text" variant="standard" onChange={(e) => setFullName(e.target.value)} autoComplete='off'/>
                         </div>
                         <div style={{margin:"0px 0% 20px 0%", width:"45%"}}>
                             <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Country</h5>
@@ -188,36 +211,36 @@ const Form = () => {
                         </div>
                         <div style={{margin:"20px 0%", width:"45%"}}>
                             <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Email</h5>
-                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" type="email" placeholder="e.g. Pandu Dirga" variant="standard" onChange="" autoComplete='off'/>
+                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" type="email" placeholder="e.g. Pandu Dirga" variant="standard" onChange={(e) => setEmail(e.target.value)} autoComplete='off'/>
                         </div>
                     </div>
                     <div className={classes.formFlex}>
                         <div style={{margin:"30px 0%", width:"45%"}}>
                             <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Age</h5>
-                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" type="number" placeholder="age" variant="standard" onChange="" autoComplete='off'/>
+                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" type="number" placeholder="age" variant="standard" onChange={(e) => setAge(e.target.value)} autoComplete='off'/>
                         </div>
                         <div style={{margin:"30px 0%", width:"45%"}}>
                             <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Phone Number</h5>
-                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. 8177387" type="text" variant="standard" onChange="" autoComplete='off'/>
+                            <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. 8177387" type="text" variant="standard" onChange={(e) => setNumber(e.target.value)} autoComplete='off'/>
                         </div>
                     </div>
                     <h3 style={{color:"#7F7F7F"}}>Organization</h3>
                     <div style={{margin:"30px 0%"}}>
                         <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Institution/Organization</h5>
-                        <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Society of Renewable Energy" type="text" variant="standard" onChange="" autoComplete='off'/>
+                        <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Society of Renewable Energy" type="text" variant="standard" onChange={(e) => setOrganization(e.target.value)} autoComplete='off'/>
                     </div>
                     <div style={{margin:"30px 0%"}}>
                         <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Title</h5>
-                        <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Society of Renewable Energy" type="text" variant="standard" onChange="" autoComplete='off'/>
+                        <TextField style={{width:"100%", height:"50px"}} id="standard-basic" placeholder="e.g. Society of Renewable Energy" type="text" variant="standard" onChange={(e) => setTitle(e.target.value)} autoComplete='off'/>
                     </div>
                     <h3 style={{color:"#7F7F7F"}}>Experience</h3>
                     <div style={{margin:"30px 0%"}}>
                         <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Activities/contributions in energy transition</h5>
-                        <TextField style={{width:"100%"}} rows={4} multiline id="standard-basic" placeholder="e.g. ......................................................." type="text" variant="standard" onChange="" autoComplete='off'/>
+                        <TextField style={{width:"100%"}} rows={4} multiline id="standard-basic" placeholder="e.g. ......................................................." type="text" variant="standard" onChange={(e) => setActivities(e.target.value)} autoComplete='off'/>
                     </div>
                     <div style={{margin:"30px 0%"}}>
                         <h5 style={{margin:"0 0 1% 0", color:"#0C268B", textAlign:"left"}}>Other informations (if necessary)</h5>
-                        <TextField style={{width:"100%", height:"50px"}} rows={4} multiline id="standard-basic" placeholder="e.g. ......................................................." type="text" variant="standard" onChange="" autoComplete='off'/>
+                        <TextField style={{width:"100%", height:"50px"}} rows={4} multiline id="standard-basic" placeholder="e.g. ......................................................." type="text" variant="standard" onChange={(e) => setOther(e.target.value)} autoComplete='off'/>
                     </div>
                     <br/>
                     <h3 style={{color:"#7F7F7F"}}>File Upload</h3>
@@ -249,9 +272,9 @@ const Form = () => {
                     <TextField title={"Age"} placeholder={"e.g. 25"} value={age} onChange={(e)=>setAge(e.target.value)}/>
                     <TextField title={"Email"} placeholder={"e.g. yourname@domain.org"} type={"email"} value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <TextField title={"Institution/Organization"} placeholder={"e.g. Society of Renewable Energy"} value={organization} onChange={(e)=>setOrganization(e.target.value)}/>
-                    <Multiline title={"Activities/Contributions in Energy Transition"} placeholder={"e.g. ......"} value={activites} onChange={(e)=>setActivites(e.target.value)}/>
+                    <Multiline title={"Activities/Contributions in Energy Transition"} placeholder={"e.g. ......"} value={activities} onChange={(e)=>setActivities(e.target.value)}/>
                     <TextField title={"Other Informations (if necessary)"} placeholder={"e.g. ......"} value={other} onChange={(e)=>setOther(e.target.value)}/>
-                    <Submit/> test */}
+                    // <Submit/> test */}
                 </form>
             </Box>
             </Grid>
