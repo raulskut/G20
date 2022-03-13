@@ -1,11 +1,13 @@
 import { Grid, Box, TextField, Button, MenuItem} from '@mui/material'
 import * as React from 'react'
-import { db } from '../../db'
+import { db, storage } from '../../db'
 import {useState} from 'react'
 import classes from './form.module.css'
 import styles from './form.style.css'
 import FileUpload from 'react-material-file-upload'
 import NavbarLogo from '../../Assets/Logo.png'
+
+//To-do: fix async/await for the upload sequence
 
 const Form = () => {
     const [fullname, setFullName] = useState("");
@@ -16,8 +18,14 @@ const Form = () => {
     const [title, setTitle] = useState("");
     const [number, setNumber] = useState("");
     const [other, setOther] = useState("");
-
     
+    const allInputs = {imgUrl: ''}
+    const [photoAsFile, setPhotoAsFile] = useState('')
+    const [photoUrl, setPhotoUrl] = useState(allInputs);
+
+    const allInputsVideo = {videoUrl: ''}
+    const [videoAsFile, setVideoAsFile] = useState('')
+    const [videoUrl, setVideoUrl] = useState(allInputsVideo);
 
     const countries = [
         {
@@ -120,8 +128,81 @@ const Form = () => {
         setGender(event.target.value);
     };
 
-    const handleSubmit = (e) => {
+    // const handlePhotoUpload = (e) => {
+    //     console.log(e.target)
+    //     // if(e.target.files[0] == null) return;
+    //     // storage.ref(`/images/${e.target.files[0].name}`).put(e.target.files[0])
+    //     // .on("state_changed" , alert("success") , alert);
+
+    //     // setPhotoUrl(`/images/${e.target.files[0].name}`);
+    //     //   if(image == null)
+    // //     return;
+    // //   storage.ref(`/images/${image.name}`).put(image)
+    // //   .on("state_changed" , alert("success") , alert);
+
+    // };
+
+    const handleImageAsFile = (e) => {
+        const image = e.target.files[0]
+        setPhotoAsFile(imageFile => (image))
+        console.log(photoAsFile);
+    }
+  
+    const handleVideoAsFile = (e) => {
+        const video = e.target.files[0]
+        setVideoAsFile(videoFile => (video))
+        console.log(photoAsFile);
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        if(photoAsFile === '') {
+            console.error(`not an image, the image file is a ${typeof(photoAsFile)}`)
+        };
+        const uploadTaskImage = storage.ref(`/images/${photoAsFile.name}`).put(photoAsFile);
+        //initiates the firebase side uploading 
+        
+        await uploadTaskImage.on('state_changed', 
+        (snapShot) => {
+        //takes a snap shot of the process as it is happening
+        console.log(snapShot)
+        }, (err) => {
+        //catches the errors
+        console.log(err)
+        }, () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the imgUrl key:
+        storage.ref('images').child(photoAsFile.name).getDownloadURL()
+            .then(fireBaseUrl => {
+            setPhotoUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+            })
+        })
+
+        if(videoAsFile === '') {
+            console.error(`not an image, the image file is a ${typeof(videoAsFile)}`)
+        };
+        const uploadTaskVideo = storage.ref(`/videos/${videoAsFile.name}`).put(videoAsFile);
+        //initiates the firebase side uploading 
+        
+        await uploadTaskVideo.on('state_changed', 
+        (snapShot) => {
+        //takes a snap shot of the process as it is happening
+        console.log(snapShot)
+        }, (err) => {
+        //catches the errors
+        console.log(err)
+        }, () => {
+        // gets the functions from storage refences the image storage in firebase by the children
+        // gets the download url then sets the image from firebase as the value for the imgUrl key:
+        storage.ref('videos').child(videoAsFile.name).getDownloadURL()
+            .then(fireBaseUrl => {
+            setVideoUrl(prevObject => ({...prevObject, videoUrl: fireBaseUrl}))
+            console.log('videos');
+            console.log(fireBaseUrl);
+            })
+        })
+        
         console.log({
             fullname:fullname,
             country:country,
@@ -132,9 +213,12 @@ const Form = () => {
             activities:activities,
             title:title,
             number:number,
+            photoUrl:photoUrl,
+            videoUrl:videoUrl,
             other:other
         });
-        db.collection("formResponses").add({
+
+        await db.collection("formResponses").add({
             fullname:fullname,
             country:country,
             gender:gender,
@@ -145,8 +229,8 @@ const Form = () => {
             title:title,
             phoneNumber:number,
             other:other,
-            photoUrl: '',
-            videoUrl: ''
+            photoUrl: photoUrl,
+            videoUrl: videoUrl,
         }).then(() => {
             alert("success");
         })
@@ -246,10 +330,37 @@ const Form = () => {
                     <h3 style={{color:"#7F7F7F"}}>File Upload</h3>
                     <div className={classes.divFile}>
                         <label for="upload-photo" style={{textAlign:"center",color:"#FFFFFF"}}><h5>Upload Photo</h5></label>
-                        <FileUpload id="upload-photo" style={{width:"100%", color:"#FFFFFF"}}/>
+                        <Box textAlign='center'>
+                        <Button
+                        variant="contained"
+                        component="label"
+                        textAlign="center"
+                        >
+                        Upload
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageAsFile}
+                            hidden
+                        />
+                        </Button></Box>
+                                                
                         <hr style={{color:"$FFFFFF"}}></hr>
                         <label for="upload-video" style={{textAlign:"center",color:"#FFFFFF"}}><h5>Upload Video</h5></label>
-                        <FileUpload id="upload-video" style={{width:"100%", color:"#FFFFFF"}}/>
+                        <Box textAlign='center'>
+                        <Button
+                        variant="contained"
+                        component="label"
+                        textAlign="center"
+                        >
+                        Upload
+                        <input
+                            type="file"
+                            accept="video/*"
+                            onChange={handleVideoAsFile}
+                            hidden
+                        />
+                        </Button></Box>
                     </div>
                     <div style={{display:"flex", justifyContent:"center", marginTop:"5%"}}>
                         <Button 

@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import 'firebase/compat/storage'; 
 import { initializeApp } from "firebase/app";
 
 var firebaseApp = firebase.initializeApp({
@@ -23,5 +24,6 @@ var firebaseApp = firebase.initializeApp({
 });
 
 var db = firebaseApp.firestore();
+var storage = firebaseApp.storage();
 
-export { db };
+export { db, storage };
