@@ -1,0 +1,148 @@
+.card{
+    width: 85%;
+    padding: 0.5% 2%;
+    display: flex;
+    margin: auto;
+    border-radius: 150px;
+    background-color: #ffffff;
+    display: flex;
+    transition: all 0.6s ease-in-out;
+}
+
+.card:hover{
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+.divCard{
+    margin: 2% 0%;
+}
+
+.flag, .status{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0% 2% 0% 2%;
+}
+
+.flag img{
+    width: 70%;
+}
+
+.status img{
+    width: 70%;
+}
+
+.textCountry{
+    margin: 0% 5% 0% 2%;
+    color: #0C268B;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+}
+
+.userPhoto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0% 2% 0% 3%;
+}
+
+.userDetail{
+    display: flex;
+    margin: 0% 2% 0% 8%;
+    padding: 0% 2%;
+}
+
+.userPhoto{
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 200px;
+}
+
+.userPhoto img{
+    width: 50%;
+    border-radius: 200px;
+}
+
+.userInfo{
+    display: flex;
+    align-items: center;
+    width: 70%;
+}
+
+.userName{
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0%;
+}
+
+.userEmail{
+    margin: 4.2% 0 0 0;
+    font-style: italic;
+    color: #7F7F7F;
+}
+
+.userText{
+    display: inline-block;
+}
+
+.submissionDate{
+    margin: 0% 2% 0% 2%;
+    color: #0C268B;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0% 2% 0% 20%;
+}
+
+.menu img{
+    width: 50%;
+}
+
+.title{
+    padding: 0% 10%;
+}
+
+.navbarDiv{
+    display: flex;
+    justify-content: space-between;
+    background-color: #FF0000;
+}
+
+.navbarDiv img{
+    width: 40%;
+}
+
+.navMenu{
+    display: flex;
+    align-items: center;
+    margin-right: 5%;
+    color: white;
+    width: 30%;
+}
+
+.navMenu a{
+    margin: 0% 5%;
+    color: white;
+    transition: all 1s ease-in;
+}
+
+.navMenu a:hover{
+    font-weight: bold;
+}
+
+.navMenu a p{
+    font-size: 20px;
+}

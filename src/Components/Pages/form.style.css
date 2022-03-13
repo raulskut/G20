@@ -1,0 +1,14 @@
+.App-header {
+    display: flex!important;
+}
+
+.css-1sasres {
+    border: none!important;
+    border-radius: none!important;
+    border-color: none!important;
+    color:#ffffff!important;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 8px;
+    padding-right: 8px;
+}

@@ -1,0 +1,31 @@
+.navbarDiv{
+    display: flex;
+    justify-content: space-between;
+    background-color: #FF0000;
+}
+
+.navbarDiv img{
+    width: 40%;
+}
+
+.navMenu{
+    display: flex;
+    align-items: center;
+    margin-right: 5%;
+    color: white;
+    width: 30%;
+}
+
+.navMenu a{
+    margin: 0% 5%;
+    color: white;
+    transition: all 1s ease-in;
+}
+
+.navMenu a:hover{
+    font-weight: bold;
+}
+
+.navMenu a p{
+    font-size: 20px;
+}

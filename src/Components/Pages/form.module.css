@@ -1,0 +1,55 @@
+*{
+    text-decoration: none;
+}
+
+.formFlex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.divFile{
+    background-color: #002060;
+    padding: 5%;
+}
+
+.css-1sasres {
+    border: 1px solid;
+    border-radius: 4px;
+    border-color: #FFFFFF!important;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.navbarDiv{
+    display: flex;
+    justify-content: space-between;
+    background-color: #FF0000;
+}
+
+.navbarDiv img{
+    width: 40%;
+}
+
+.navMenu{
+    display: flex;
+    align-items: center;
+    margin-right: 5%;
+    color: white;
+    width: 30%;
+}
+
+.navMenu a{
+    margin: 0% 5%;
+    color: white;
+    transition: all 1s ease-in;
+}
+
+.navMenu a:hover{
+    font-weight: bold;
+}
+
+.navMenu a p{
+    font-size: 20px;
+}
